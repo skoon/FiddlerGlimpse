@@ -10,11 +10,11 @@ namespace FiddlerGlimpse
 
         public StreamingSelfHost()
         {
+            //need to pull from config or Fiddler settings
             var config = new HttpSelfHostConfiguration("http://localhost:8080");
 
             config.Routes.MapHttpRoute(
-                "FiddlerGlimpse", "fiddlerGlimpse/fiddler/",
-                new { id = RouteParameter.Optional });
+                "FiddlerGlimpse", "fiddlerGlimpse/fiddler/");
 
             _server = new HttpSelfHostServer(config);
 

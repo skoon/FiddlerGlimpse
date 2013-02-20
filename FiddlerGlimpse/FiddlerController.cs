@@ -7,11 +7,6 @@ namespace FiddlerGlimpse
     public class FiddlerController : ApiController
     {
 
-        public FiddlerController()
-        {
-
-        }
-
         public void Index()
         {
 

@@ -56,8 +56,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="FiddlerController.cs" />
     <Compile Include="FiddlerPlugin.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="StreamingSelfHost.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
