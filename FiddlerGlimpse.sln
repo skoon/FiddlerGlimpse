@@ -1,0 +1,26 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2012
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FiddlerGlimpse", "FiddlerGlimpse\FiddlerGlimpse.csproj", "{ABDF2893-5CA7-40F4-80EB-28EB96F58732}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GlimpsePlugin", "GlimpsePlugin\GlimpsePlugin.csproj", "{D86A7C00-F247-4273-8D4D-37769B02CE4F}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{ABDF2893-5CA7-40F4-80EB-28EB96F58732}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{ABDF2893-5CA7-40F4-80EB-28EB96F58732}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{ABDF2893-5CA7-40F4-80EB-28EB96F58732}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{ABDF2893-5CA7-40F4-80EB-28EB96F58732}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D86A7C00-F247-4273-8D4D-37769B02CE4F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D86A7C00-F247-4273-8D4D-37769B02CE4F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D86A7C00-F247-4273-8D4D-37769B02CE4F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D86A7C00-F247-4273-8D4D-37769B02CE4F}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
