@@ -4,8 +4,9 @@ using System.Web.Http.SelfHost;
 
 namespace FiddlerGlimpse
 {
-    public class StreamingSelfHost
+    public class StreamingSelfHost : IDisposable
     {
+        private HttpSelfHostServer _server;
 
         public StreamingSelfHost()
         {
@@ -15,11 +16,23 @@ namespace FiddlerGlimpse
                 "FiddlerGlimpse", "fiddlerGlimpse/fiddler/",
                 new { id = RouteParameter.Optional });
 
-            using (HttpSelfHostServer server = new HttpSelfHostServer(config))
-            {
-                server.OpenAsync().Wait();
+            _server = new HttpSelfHostServer(config);
 
-            }
+        }
+
+        public void Start()
+        {
+            _server.OpenAsync().Wait();
+        }
+
+        public void Stop()
+        {
+            _server.CloseAsync().Wait();
+        }
+
+        public void Dispose()
+        {
+            _server.Dispose();
         }
     }
 }

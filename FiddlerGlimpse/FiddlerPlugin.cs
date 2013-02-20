@@ -1,12 +1,11 @@
 ﻿using System;
 using Fiddler;
 
-
-
 namespace FiddlerGlimpse
 {
     public class FiddlerPlugin : IAutoTamper
     {
+        private StreamingSelfHost _server;
         public void AutoTamperRequestAfter(Session oSession)
         {
 
@@ -34,17 +33,20 @@ namespace FiddlerGlimpse
 
         public void OnBeforeUnload()
         {
-            //noop
+            _server.Stop();
+            _server.Dispose();
         }
 
         public void OnLoad()
         {
-            // Tell Glimpse we are ready.
+            _server = new StreamingSelfHost();
+            _server.Start();
         }
 
         private void TellGlimpse()
         {
-            
+            //need to filter out our own packets based on the x-header the 
+            //WebAPi controller sends down the pipe
         }
     }
 }
