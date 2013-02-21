@@ -1,38 +1,48 @@
 using System;
-using System.Web.Http;
-using System.Web.Http.SelfHost;
+using Microsoft.AspNet.SignalR;
+using Microsoft.Owin.Hosting;
+using Owin;
 
 namespace FiddlerGlimpse
 {
     public class StreamingSelfHost : IDisposable
     {
-        private HttpSelfHostServer _server;
 
+        private string Url = "http://localhost:8080";
         public StreamingSelfHost()
         {
-            //need to pull from config or Fiddler settings
-            var config = new HttpSelfHostConfiguration("http://localhost:8080");
-
-            config.Routes.MapHttpRoute(
-                "FiddlerGlimpse", "fiddlerGlimpse/fiddler/");
-
-            _server = new HttpSelfHostServer(config);
 
         }
 
         public void Start()
         {
-            _server.OpenAsync().Wait();
+
+
+            using (WebApplication.Start<Startup>(Url))
+            {
+                Console.WriteLine("Server running on {0}", Url);
+                Console.ReadLine();
+            }
+
         }
 
         public void Stop()
         {
-            _server.CloseAsync().Wait();
+
         }
 
         public void Dispose()
         {
-            _server.Dispose();
+
+        }
+    }
+
+    class Startup
+    {
+        public void Configuration(IAppBuilder app)
+        {
+            // This will map out to http://localhost:8080/signalr by default
+            app.MapHubs();
         }
     }
 }
