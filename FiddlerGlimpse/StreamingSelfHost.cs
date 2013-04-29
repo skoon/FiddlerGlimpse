@@ -9,10 +9,6 @@ namespace FiddlerGlimpse
     {
 
         private string Url = "http://localhost:8080";
-        public StreamingSelfHost()
-        {
-
-        }
 
         public void Start()
         {
