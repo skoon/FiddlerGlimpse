@@ -3,7 +3,7 @@ using Fiddler;
 
 namespace FiddlerGlimpse
 {
-    public class FiddlerPlugin : IAutoTamper
+    public class FiddlerPlugin : IAutoTamper, IDisposable
     {
         private StreamingSelfHost _server;
         public void AutoTamperRequestAfter(Session oSession)
@@ -62,6 +62,14 @@ namespace FiddlerGlimpse
             //need to filter out our own packets based on the x-header
             //we send down the pipe
             
+        }
+        public void Dispose()
+        {
+            if (_server != null)
+            {
+                _server.Dispose();
+                _server = null;
+            }
         }
     }
 }

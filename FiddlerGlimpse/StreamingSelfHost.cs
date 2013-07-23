@@ -8,11 +8,13 @@ namespace FiddlerGlimpse
     public class StreamingSelfHost : IDisposable
     {
 
-        private string Url = "http://localhost:8080";
+        // Should probably move this to configuration,
+        // but really since it's running in a system proxy
+        // who cares?
+        private string Url = "http://localhost:8080"; 
 
         public void Start()
         {
-
 
             using (WebApplication.Start<Startup>(Url))
             {
