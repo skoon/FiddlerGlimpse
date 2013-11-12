@@ -1,5 +1,6 @@
 ﻿using System;
 using Fiddler;
+using Microsoft.AspNet.SignalR;
 
 namespace FiddlerGlimpse
 {
@@ -55,6 +56,12 @@ namespace FiddlerGlimpse
         {
             _server = new StreamingSelfHost();
             _server.Start();
+            ConnectToHub();
+        }
+
+        private void ConnectToHub()
+        {
+            var connection = new HubConnection(StreamingSelfHost.Url);
         }
 
         private void TellGlimpse(GlimpseChatter chatter)
