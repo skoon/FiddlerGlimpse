@@ -1,11 +1,13 @@
 ﻿using System;
 using Fiddler;
 using Microsoft.AspNet.SignalR;
+using ServiceStack.Text;
 
 namespace FiddlerGlimpse
 {
     public class FiddlerPlugin : IAutoTamper, IDisposable
     {
+        private GlimpseConnection _connection;
         private StreamingSelfHost _server;
         public void AutoTamperRequestAfter(Session oSession)
         {
@@ -61,14 +63,15 @@ namespace FiddlerGlimpse
 
         private void ConnectToHub()
         {
-            var connection = new HubConnection(StreamingSelfHost.Url);
+            _connection = new GlimpseConnection();
         }
 
         private void TellGlimpse(GlimpseChatter chatter)
         {
             //need to filter out our own packets based on the x-header
             //we send down the pipe
-            
+            var message = new ConnectionMessage("FiddlerPacket", chatter.ToJson<GlimpseChatter>());
+            _connection.Connection.Send(message);
         }
         public void Dispose()
         {

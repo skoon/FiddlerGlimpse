@@ -11,12 +11,12 @@ namespace FiddlerGlimpse
         // Should probably move this to configuration,
         // but really since it's running in a system proxy
         // who cares?
-        public const string Url = "http://localhost:8080"; 
+        public const string Url = "http://localhost:8080";
 
         public void Start()
         {
 
-            using (WebApplication.Start<Startup>(Url))
+            using (WebApp.Start<Startup>(Url))
             {
                 Console.WriteLine("Server running on {0}", Url);
                 Console.ReadLine();

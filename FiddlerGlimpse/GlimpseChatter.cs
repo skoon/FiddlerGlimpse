@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using Fiddler;
 
+
 namespace FiddlerGlimpse
 {
     public class GlimpseChatter
@@ -13,4 +14,5 @@ namespace FiddlerGlimpse
         public string Body { get; set; }
         public bool IsRequest { get; set; }
     }
+
 }
