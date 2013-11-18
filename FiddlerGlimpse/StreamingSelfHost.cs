@@ -8,7 +8,8 @@ namespace FiddlerGlimpse
     public class StreamingSelfHost : IDisposable
     {
 
-        private string Url = "http://localhost:8080";
+        private string Url = "http://localhost:8090";
+        private IDisposable _server;
         public StreamingSelfHost()
         {
 
@@ -16,24 +17,17 @@ namespace FiddlerGlimpse
 
         public void Start()
         {
-
-
-            using (WebApplication.Start<Startup>(Url))
-            {
-                Console.WriteLine("Server running on {0}", Url);
-                Console.ReadLine();
-            }
-
+            _server = WebApplication.Start<Startup>(Url);
         }
 
         public void Stop()
         {
-
+            _server.Dispose();
         }
 
         public void Dispose()
         {
-
+            _server.Dispose();
         }
     }
 
@@ -41,8 +35,7 @@ namespace FiddlerGlimpse
     {
         public void Configuration(IAppBuilder app)
         {
-            // This will map out to http://localhost:8080/signalr by default
-            app.MapHubs();
+            app.MapConnection<GlimpseConnection>("glimpse");
         }
     }
 }

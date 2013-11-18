@@ -6,6 +6,20 @@ using System.Web;
 namespace GlimpsePlugin
 {
 
+    public class ScriptInjector : IClientScript
+    {
+        
+        public ScriptInjector()
+        {
+            
+        }
+
+        public ScriptOrder Order
+        {
+            get { throw new NotImplementedException(); }
+        }
+    }
+
     public class GlimpsePlugin : ITab
     {
         public object GetData(HttpContextBase context)
