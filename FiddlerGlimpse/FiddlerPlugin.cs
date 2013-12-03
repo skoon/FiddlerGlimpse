@@ -1,14 +1,34 @@
 ﻿using System;
+using System.Reflection;
 using Fiddler;
 using Microsoft.AspNet.SignalR;
-using ServiceStack.Text;
+using Microsoft.AspNet.SignalR.Client;
+using Microsoft.AspNet.SignalR.Infrastructure;
+
 
 namespace FiddlerGlimpse
 {
     public class FiddlerPlugin : IAutoTamper, IDisposable
     {
-        private GlimpseConnection _connection;
         private StreamingSelfHost _server;
+
+        public FiddlerPlugin()
+        {
+            LoadRequiredAssemblies();
+        }
+
+        public StreamingSelfHost _Server
+        {
+            get
+            {
+                if (_server == null)
+                {
+                    _server = StreamingSelfHost.Instance;
+                    _Server.Start();
+                }
+                return _server;
+            }
+        }
         public void AutoTamperRequestAfter(Session oSession)
         {
             var chat = new GlimpseChatter
@@ -28,6 +48,8 @@ namespace FiddlerGlimpse
 
         public void AutoTamperResponseAfter(Session oSession)
         {
+            //need to filter out our own packets based on the x-header
+            //we send down the pipe
             var chat = new GlimpseChatter
             {
                 URL = oSession.fullUrl,
@@ -35,7 +57,7 @@ namespace FiddlerGlimpse
                 IsRequest = false,
                 Body = oSession.GetResponseBodyAsString()
             };
-            TellGlimpse(chat);
+            //TellGlimpse(chat);
         }
 
         public void AutoTamperResponseBefore(Session oSession)
@@ -50,35 +72,33 @@ namespace FiddlerGlimpse
 
         public void OnBeforeUnload()
         {
-            _server.Stop();
-            _server.Dispose();
+            _Server.Stop();
         }
 
         public void OnLoad()
         {
-            _server = new StreamingSelfHost();
-            _server.Start();
-            ConnectToHub();
-        }
-
-        private void ConnectToHub()
-        {
-            _connection = new GlimpseConnection();
+            _server = StreamingSelfHost.Instance;
+            _Server.Start();
         }
 
         private void TellGlimpse(GlimpseChatter chatter)
         {
-            //need to filter out our own packets based on the x-header
-            //we send down the pipe
-            var message = new ConnectionMessage("FiddlerPacket", chatter.ToJson<GlimpseChatter>());
-            _connection.Connection.Send(message);
+            _Server.TalkToGlimpse(chatter);
         }
+
         public void Dispose()
         {
-            if (_server != null)
+            if (_Server != null)
             {
-                _server.Dispose();
                 _server = null;
+            }
+        }
+        public void LoadRequiredAssemblies()
+        {
+            var farts = Assembly.GetExecutingAssembly().GetReferencedAssemblies();
+            foreach (var asm in farts)
+            {
+                AppDomain.CurrentDomain.Load(asm);
             }
         }
     }
